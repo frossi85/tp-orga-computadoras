@@ -1,3 +1,18 @@
+/* ****************************************************************************
+ * ****************************************************************************
+ *
+ * LIBRERÍA SHELLSORT
+ *
+ * ****************************************************************************
+ * ***************************************************************************/
+
+
+
+#ifndef COMPARE_H
+#define COMPARE_H
+
+
+
 // Función que  usada para comparar dos palabras y decidir cual debe ir primero 
 // en una funcion de ordenamiento
 // PRE: 'word1' y 'word2' son las palabras a comparar
@@ -6,3 +21,6 @@
 // - = 0 word1 es igual a word2
 // - < 0 word1 es menor a word2
 int compare(char [] word1, char [] word2);
+
+
+#endif
