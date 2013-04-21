@@ -19,7 +19,7 @@
 // - < 0 word1 es menor a word2
 // - > 0 word2 es menor a word1
 // - = 0 word1 es igual a word2
-int compare(char* word1, char* word2);
+int compare(const char* word1, const char* word2);
 
 
 #endif
