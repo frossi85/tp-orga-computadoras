@@ -9,7 +9,7 @@
 ################
 
 # Nombre del ejecutable.
-target = main
+target = tp0
 
 # Extensión de los archivos a compilar (c para C, cpp o cc o cxx para C++).
 extension = c
@@ -43,6 +43,7 @@ math = si
 ###########################
 
 # Opciones para el compilador C/C++ en modo ansi.
+#CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 
 # Para que explote lo mas posible
@@ -55,7 +56,7 @@ CFLAGS += -ggdb -DDEBUG -fno-inline
 #LDFLAGS =
 
 # Estandar de C a usar
-CSTD = c99
+CSTD = gnu99
 
 # Estandar de C++ a usar
 CXXSTD = c++98
