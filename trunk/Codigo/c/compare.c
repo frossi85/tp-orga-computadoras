@@ -15,23 +15,6 @@
 
 
 /* ****************************************************************************
- * FUNCIONES AUXILIARES
- * ***************************************************************************/
-
-// Funcion que convierte una palabra a minusculas.
-// PRE: 'palabra' es una cadena de caraceteres.
-// POST: 'palabra' se convirtio en minusculas.
-void palabraAMinuscula(char* palabra)
-{
-	int i;
-	for (i = 0; palabra[i]; i++)
-		palabra[i] = tolower(palabra[i]);
-}
-
-
-
-
-/* ****************************************************************************
  * FUNCIONES DE LA LIBRERIA
  * ***************************************************************************/
 
@@ -44,16 +27,6 @@ void palabraAMinuscula(char* palabra)
 // - = 0 word1 es igual a word2
 int compare(const char* word1, const char* word2) 
 {
-	// Creamos una copia de las palabras
-	char w1[strlen(word1)];
-	char w2[strlen(word2)];
-	strcpy(w1, word1);
-	strcpy(w2, word2);
-
-	// Convertimos en minusculas las palabras copiadas
-	palabraAMinuscula(w1);
-	palabraAMinuscula(w2);
-
-	// Hacemos comparacion y devolvemos resultado
-	return strcmp(w1, w2);
+	// Hacemos comparacion y devolvemos resultado de esta
+	return strcasecmp(word1, word2);
 }
