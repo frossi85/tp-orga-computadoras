@@ -15,7 +15,8 @@
 // Función que carga un archivo de texto a memoria
 // PRE: 'fileUrl' es la url completa al archivo a ordenar.
 // POST: devuelve la lista de palabras cargadas en memoria
-char * words file_loader(const char * fileUrl)
+char * file_loader(const char * fileUrl)
 
+char ** to_words(char * text)
 
 #endif

@@ -14,7 +14,7 @@
 // Función que carga un archivo de texto a memoria
 // PRE: 'fileUrl' es la url completa al archivo a ordenar.
 // POST: devuelve la lista de palabras cargadas en memoria
-char * words file_loader(const char * fileUrl)
+char * file_loader(const char * fileUrl)
 {
 	FILE * file;
 	long fileSize;
@@ -58,5 +58,37 @@ char * words file_loader(const char * fileUrl)
 
 	return buffer;
 }
+
+char ** to_words(char * text)
+{
+	char ** words;
+	size_t textSize = sizeof (text) / sizeof (char);
+	size_t actualWordSize = 0; 
+	int wordsIndex = 0;
+	int letterIndex = 0;
+
+	//initialy allocate memory for 100 words
+
+	//words = malloc( MAXNUMBEROFWORDS * sizeof(char*) );
+	words = malloc( 100 * sizeof(char*) );
+
+	for (int i = 0; i < textSize; i++)
+	{
+		char letter = text[i];
+
+		if(letter != ' ')
+		{
+			words[wordsIndex][letterIndex] = letter;
+		}
+		else
+		{
+			letterIndex = 0;
+			wordsIndex++;
+
+		}
+	}
+
+}
+
 
 //	free (buffer);
