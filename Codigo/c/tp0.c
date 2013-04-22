@@ -8,7 +8,7 @@
  * 
  * ALUMNOS: 
  * 
- * Facundo Rossi () - 
+ * Facundo Rossi (86707) - frossi85@gmail.com
  * Federico Colangelo () - 
  * Federico Martin Rossi (92086) - federicomrossi@gmail.com
  *
@@ -33,7 +33,30 @@
 #include <unistd.h>
 #include "bubblesort.h"
 #include "shellsort.h"
+#include "fileloader.h"
 
+void testFileLoader(const char * url)
+{
+	char * text;
+	char ** words = NULL;
+	int wordsSize = 0;
+
+	text = file_loader(url);
+	
+	if (text != NULL)
+	{
+		//fputs(text, stdout);
+	}
+
+	wordsSize = to_words(text, &words);
+
+	for(int i = 0; i < wordsSize; i++)
+	{
+		fputs("\n", stdout);
+		fputs(words[i], stdout);
+		fputs("\n", stdout);
+	}	
+}
 
 
 
@@ -89,9 +112,16 @@ void ordenamientoImprimirSalidaEstandar(char* palabras[], int arraysize)
 
 int main(int argc, char **argv) 
 {
+	//testFileLoader("/home/facundo/c/prueba");
+
 	
 	char *cvalue = NULL;
 	int c;
+
+	//File loader variables
+	char * text;
+	char ** words = NULL;
+	int wordsSize = 0;
 
 	opterr = 0;
 
@@ -113,23 +143,43 @@ int main(int argc, char **argv)
 			case 'b':
 				cvalue = optarg;
 				printf("TEMP: %s\n", cvalue);
-				// Parsear archivo
-				// bubblesort(words, arraysize);
-				// ordenamientoImprimirSalidaEstandar(words, size);
+
+				text = file_loader(cvalue);
+
+				if (text == NULL)
+					break;
+	
+				wordsSize = to_words(text, &words);
+
+				if (wordsSize == -1)
+					break;
+				
+				bubblesort(words, wordsSize);
+				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 				break;
 
 			// Ejecucion de shellsort
 			case 's':
 				cvalue = optarg;
 				printf("TEMP: %s\n", cvalue);
-				// Parsear archivo
-				// shellsort(words, arraysize);
-				// ordenamientoImprimirSalidaEstandar(words, size);
+
+				text = file_loader(cvalue);
+				
+				if (text == NULL)
+					break;
+
+				wordsSize = to_words(text, &words);
+
+				if (wordsSize == -1)
+					break;
+
+				shellsort(words, wordsSize);
+				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 				break;
 			
 			// No se especifica nombre de archivo
 			case '?':
-				// Ejecutar bubblesort con texto desde entrada
+				// Ejecutar bubblesort con texto desde entrada 
 				// estandar
 				if(optopt == 'b')
 				{
@@ -168,11 +218,21 @@ int main(int argc, char **argv)
 		}
 	}
 
+
+/*
+	printf ("aflag = %d, bflag = %d, cvalue = %s\n", aflag, bflag, cvalue);
+     
+	for (index = optind; index < argc; index++)
+		printf ("Non-option argument %s\n", argv[index]);
+*/
+
 	if(opterr || argc <= 1)
 	{
 		fprintf (stderr, "Los argumentos no son válidos.\n");
 		printf("Tipee 'tp0 -h' para ver el modo de uso.\n");
 	}
 
+
 	return 0;
 }
+
