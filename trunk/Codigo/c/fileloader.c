@@ -8,8 +8,9 @@
 
 
 #include <stdio.h>
+#include <stdlib.h> 
+#include <string.h>
 #include "fileloader.h"
-
 
 
 // Funcion que carga un archivo de texto a memoria
@@ -17,87 +18,122 @@
 // POST: devuelve la lista de palabras cargadas en memoria
 char * file_loader(const char * fileUrl)
 {
-	// FILE * file;
-	// long fileSize;
-	// char * buffer;
-	// size_t result;
+	 FILE * file;
+	 long fileSize;
+	 char * buffer;
+	 size_t result;
 
-	// file = fopen (fileUrl, "r");
+	 file = fopen (fileUrl, "r");
 
-	// if (file==NULL) 
-	// {
-	// 	//Fail to load file
-	// 	fputs ("The file can not be open or not exist", stderr); 
-	// 	exit (1);
-	// }
+	 if (file==NULL) 
+	 {
+	 	//Fail to load file
+	 	fputs ("The file can not be open or not exist \n", stderr); 
+		return NULL;
+//	 	exit (1);
+	 }
 
-	// //Get file size
-	// fseek (file , 0 , SEEK_END);
-	// fileSize = ftell (file);
-	// rewind (file);
+	 //Get file size
+	 fseek (file , 0 , SEEK_END);
+	 fileSize = ftell (file);
+	 rewind (file);
 
-	// //Allocate memory for the whole file
-	// buffer = (char *) malloc (sizeof(char) * fileSize);
+	 //Allocate memory for the whole file
+	 buffer = (char *) malloc ((sizeof(char) * fileSize) + 1);
 	
-	// if (buffer == NULL) 
-	// {
-	// 	fputs ("There is no enoght memory to allocate the file in memory", stderr); 
-	// 	exit (2);}
+	 if (buffer == NULL) 
+	 {
+	 	fputs ("There is no enoght memory to allocate the file in memory \n", stderr); 
+//	 	exit (2);
+		return NULL;
+	}
 
-	// //Copy the file to the buffer
-	// result = fread (buffer, 1, fileSize, file);
+	 //Copy the file to the buffer
+	 result = fread (buffer, 1, fileSize, file);
+         buffer[(sizeof(char) * fileSize)] = '\0';
 	
-	// if (result != fileSize) 
-	// {
-	// 	fputs ("Fail to read the whole file", stderr); 
-	// 	exit (3);
-	// }
+	 if (result != fileSize) 
+	 {
+	 	fputs ("Fail to read the whole file \n", stderr); 
+//	 	exit (3);
+		return NULL;
+	 }
 
-	// /* the whole file is now loaded in the memory buffer. */
+	 /* the whole file is now loaded in the memory buffer. */
 
-	// fclose (file);
+	 fclose (file);
 
-	// return buffer;
-
-	// TEMP
-	return NULL;
+	 return buffer;
 }
 
 
 // [ Colocar documentacion ]
-char ** to_words(char * text)
+int to_words(char * text, char *** result)
 {
-	// char ** words;
-	// size_t textSize = sizeof (text) / sizeof (char);
-	// size_t actualWordSize = 0; 
-	// int wordsIndex = 0;
-	// int letterIndex = 0;
+ 	char ** words;
+ 	char ** reallocatedWords = NULL;
+ 	bool isNewWord = true;
+	size_t textSize = strlen(text);
+	int wordsIndex = 0;
+	size_t bufferSize = INITIAL_BUFFER_SIZE * sizeof(char*);
+	size_t spaceForWords = INITIAL_BUFFER_SIZE;
 
-	// //initialy allocate memory for 100 words
+	//initialy allocate memory for 100 words
+	words = malloc ( INITIAL_BUFFER_SIZE * sizeof(char*) );
 
-	// //words = malloc( MAXNUMBEROFWORDS * sizeof(char*) );
-	// words = malloc( 100 * sizeof(char*) );
+	if(words == NULL)
+	{
+		fputs ("Not enough memory to allocate the words \n", stderr); 
+		return -1;
+	}
 
-	// for (int i = 0; i < textSize; i++)
-	// {
-	// 	char letter = text[i];
+	for (int i = 0; i < textSize; i++)
+	{
+		if ( !isEndOfWord (text[i]) )
+		{
+			if(isNewWord)
+			{
+				words[wordsIndex] = &text[i];
+				isNewWord = false;
 
-	// 	if(letter != ' ')
-	// 	{
-	// 		words[wordsIndex][letterIndex] = letter;
-	// 	}
-	// 	else
-	// 	{
-	// 		letterIndex = 0;
-	// 		wordsIndex++;
+				if(wordsIndex >= spaceForWords)
+				{
+					//Reallocate for more space and copy the old array to the new one
+					bufferSize *= 2;
+					spaceForWords *= 2;
+					reallocatedWords = realloc(words, bufferSize);
+				
+					if(reallocatedWords != NULL) 
+					{
+						words = reallocatedWords;
+						reallocatedWords = NULL;
+					}
+					else 
+					{ 
+						fputs ("Not enough memory to allocate the words \n", stderr); 
+						return -1;
+					}
+				}
 
-	// 	}
-	// }
+				wordsIndex++;
+			}
+		}
+		else
+		{
+			text[i] = '\0';
+			isNewWord = true;
+		}
+	}
 
-	// TEMP
-	return NULL;
+	*result = words;
 
+	return wordsIndex;
 }
 
-
-//	free (buffer);
+bool isEndOfWord(char letter)
+{
+	//A-Z es de 65 a 90
+	//a-z es de 97 a 122
+	//0-9 es de 48 a 57
+	return !( (letter > 64 && letter < 91) || (letter > 96 && letter < 123) || (letter > 47 && letter < 58));
+}
