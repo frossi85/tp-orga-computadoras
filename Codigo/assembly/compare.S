@@ -26,9 +26,24 @@ nextchar:
 		#Cargo los elementos a comparar en t4 y t5
 		lb t3, 0(t1)
 		lb t4, 0(t2)
+	
+		#Voy a pasar todas las mayusculas a minusculas para que compare sea case insenstive como en C
+		
+		addi t5, t3, -91
+		bgtz t5, aMinusculas2
+		addi t5, t3, -64
+		bltz t5, aMinusculas2
+		addi t3, t3, 32
+
+aMinusculas2:	addi t5, t4, -91
+		bgtz t5, comparacion
+		addi t5, t4, -64
+		bltz t5, comparacion
+		addi t3, t4, 32
+
 
 		#Comparo caracter para ver si es final del string
-		beqz t3, fincadena1
+comparacion:	beqz t3, fincadena1
 		beqz t4, fincadena2
 
 continue:	sub t0, t3, t4		# cadena1[i] - cadena2[i]	
