@@ -9,7 +9,7 @@
  * ALUMNOS: 
  * 
  * Facundo Rossi (86707) - frossi85@gmail.com
- * Federico Colangelo () - 
+ * Federico Colangelo (89869) - federico.colangelo@semperti.com
  * Federico Martin Rossi (92086) - federicomrossi@gmail.com
  *
  * ****************************************************************************
@@ -69,10 +69,10 @@ void testFileLoader(const char * url)
 void ayudaImprimirSalidaEstandar()
 {
 	printf("tp0 [OPTIONS] [files...]\n");
-	printf("-h, --help\t\t\t display this help and exit.\n");
-	printf("-V, --version\t\t\t display version information and exit.\n");
-	printf("-m, --bubble\t\t\t use the bubblesort algorithm.\n");
-	printf("-s, --sel\t\t\t use the shellsort algorithm.\n\n");
+	printf("-h, \t\t\t display this help and exit.\n");
+	printf("-V, \t\t\t display version information and exit.\n");
+	printf("-b, \t\t\t use the bubblesort algorithm.\n");
+	printf("-s, \t\t\t use the shellsort algorithm.\n\n");
 	printf("$echo -n echo 'El tractorcito rojo que silbo y bufo' > entrada.txt\n");
 	printf("$tp0 -b entrada.txt\n");
 	printf("bufo El que rojo silbo tractorcito y\n\n");
