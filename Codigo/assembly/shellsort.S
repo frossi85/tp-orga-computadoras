@@ -6,43 +6,48 @@
 .text
 .align 2
 .globl shellsort
+.extern swap
+.extern compare
 
 
-shellsort:	subu sp,sp,16		# creo stack frame
+shellsort:	subu sp,sp,24		# creo stack frame, es de 24 porque necesito guardar ra
+		sw ra,16(sp)		
 		sw $fp,12(sp)
 		sw gp,8(sp)
 		move $fp,sp
 
 		#Guardo los parametros recibidos en fp
-		sw a0,16($fp)		# words = char **
-		sw a1,20($fp) 		# size
+		sw a0,24($fp)		# words = char **
+		sw a1,28($fp) 		# size
 
 		#Guardo los parametros cargados en fp a variables temporales
-		lw t6, 16($fp)		#en 16 esta el words
-		lw t7, 20($fp)		#en 20 esta el size
+		lw t6, 24($fp)		#en 24 esta el words
+		lw t7, 28($fp)		#en 28 esta el size
 
 		#Iniciaizo variables locales
-		srl t0, t7, 2		# intervalo = size/2
+		sra t0, t7, 1		# intervalo = size/2
 		li t1, 0		# k
 		li t2, 0		# j
 		li t3, 0		# i
 		li t4, 0		# sAux
 
 		#Resto uno al valor de size para la comparacion del for i < size
-		sub t7, 1
+		addi t7, t7, -1
 
 		#while(intervalo > 0)
-loop1:		bgt t0, 0, loop2	#branch grater than, salta si t1 es mayor a t0
+loop1:		bgt t0, zero, loop2	#branch grater than, salta si t1 es mayor a t0
 		j fin
 
 		#for(i = intervalo-1; i < arraysize; i++)	
-loop2:		bge t3, t7, endloop2	# mientras i <= size - 1, bge=branch greater than or equal
+loop2:		addi t3, t0, -1		# i = interlvalo - 1
+		bge t3, t7, endloop2	# mientras i <= size - 1, bge=branch greater than or equal
 		
 
 		sub t2, t3, t0		#j = i - intervalo;
 
 		#while(j >= 0)
-loop3:		bge t2, 0, loop3task
+loop3:		bge t2, zero, loop3task
+		addi t3, t3, 1
 		j loop2
 
 loop3task:	add t1, t2, t0		#k = j + intervalo;
@@ -81,8 +86,7 @@ loop3task:	add t1, t2, t0		#k = j + intervalo;
 		j loop3
 
 
-endloop2:	srl t0, t0, 2		#intervalo = intervalo / 2;
-		addi t3, t3, 1		#i++
+endloop2:	sra t0, t0, 1		#intervalo = intervalo / 2;
 		j loop1
 
 
@@ -91,7 +95,8 @@ endloop2:	srl t0, t0, 2		#intervalo = intervalo / 2;
 fin:		move sp, $fp
 		lw gp, 8(sp)
 		lw $fp, 12(sp)
-		addiu sp, sp, 16
+		lw ra, 16(sp)
+		addiu sp, sp, 24
 		jr ra			#ra = return address es la direccion a la q quiero volver luego de llamar la funcion
 
 #endif
