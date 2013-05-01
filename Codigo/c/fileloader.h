@@ -21,8 +21,10 @@
 // POST: devuelve la lista de palabras cargadas en memoria
 char* file_loader(const char * fileUrl);
 
+// [ Colocar documentacion ]
 int to_words(char * text, char *** result);
 
+// [ Colocar documentacion ]
 bool isEndOfWord(char letter);
 
 #endif

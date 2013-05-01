@@ -165,4 +165,4 @@ clean:
 	$(RM) $(o_files) $(o_files:.o=.deps) $(VGLOGFILE) $(target)
 
 valgrind: 
-	valgrind $(VGFLAGS) ./$(target) input
+	valgrind $(VGFLAGS) ./$(target) alice.txt beowulf.txt

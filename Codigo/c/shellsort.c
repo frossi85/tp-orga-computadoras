@@ -8,7 +8,7 @@
 
 
 #include "shellsort.h"
-#include "compare.h"
+#include <string.h>
 
 
 
@@ -39,7 +39,7 @@ void shellsort(char* words[], int arraysize)
 
 				// Si el de indice menor es mayor que el de indice superior, los
 				// intercambiamos
-				if(compare(words[j], words[k]) > 0)
+				if(strcasecmp(words[j], words[k]) > 0)
 				{
 					sAux = words[j];
 					words[j] = words[k];
