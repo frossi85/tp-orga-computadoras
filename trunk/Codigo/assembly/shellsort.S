@@ -67,25 +67,24 @@ loop3task:	add s1, s2, s0		#k = j + intervalo;
 		addu s1, s1, s6
 		addu s2, s2, s6
 
-		#Cargo los strings a comparar
-		lw t8, 0(s1)		#OPTIMIZAR CODIGO PARA ISAR MENOS ti
-		lw t9, 0(s2)
+		#Cargo los strings a comparar en ax que luego compare utiliza para trabajar
+		lw a0, 0(s1)		#OPTIMIZAR CODIGO PARA ISAR MENOS ti
+		lw a1, 0(s2)			
+		jal compare		#llamo a compare
 
-		
-				
+		bltz v0, swapping
+		add s2, zero, zero	#j=0		
+		j endif
 
+swapping:	# poner el valor a utilizar en los registros correctos y llamar a swap
 
 		#Falta esto
-		#Si compare(words[j], words[k]) > 0
-		#{
 		#	sAux = words[j];
 		#	words[j] = words[k];
 		#	words[k] = sAux;
-		#}
-		#sino
-		#	j = 0;
 
-		sub s2, s2, s0		#j = j - intervalo;
+
+endif:		sub s2, s2, s0		#j = j - intervalo;
 		j loop3
 
 
