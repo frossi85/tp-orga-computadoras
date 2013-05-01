@@ -14,16 +14,45 @@
  *
  * ****************************************************************************
  *
- * Programa que... [ Colocar texto aqui ]
+ * Programa que permite aplicar métodos de ordenamiento a un texto o textos 
+ * especificados por el usuario. Estos textos pueden ser ingresados a traves de
+ * la entrada estandar o bien a traves de la especificacion de los nombres de
+ * archivo que se desean procesar. Cabe resaltar que al especificar varios
+ * nombres de archivos, los metodos seran aplicados al conjunto total de los
+ * textos contenidos en estos. Es decir, el resultado del ordenamiento sera 
+ * unico ya que contendra la mezcla de palabras de todos los archivos.
+ * Los métodos de ordenamiento soportados por la presente versión del programa
+ * son: 
+ *	
+ *		- Bubblesort
+ *		- Shellsort
  *
  *
  *
  * FORMA DE USO
  * ============
- * 
- *  [ Colocar texto aqui ]
+ *
+ * El programa debera ser ejecutado por consola mediante el siguiente comando:
+ *
+ *  	# ./tp0 [OPCION] [archivos...]
+ *	
+ * donde, la opcion puede ser:
+ *
+ *	-h,		Muestra la ayuda
+ *	-V,		Muestra la informacion de la version
+ *	-b,		Indica la utilizacion del algoritmo Bubblesort
+ *	-s,		Indica la utilizacion del algoritmo Shellsort
+ *
+ * y en archivos se debe especificar los nombres de archivo (incluyendo su
+ * extension) separados uno del otro por un espacio.
+ * En caso de desear ingresar el texto a traves de la entrada estandar, debe
+ * utilizarse la siguiente variacion del comando anterior:
+ *
+ *  	# ./tp0 [OPCION]
+ *
  *
  */
+
 
 
 #include <ctype.h>
@@ -35,28 +64,18 @@
 #include "shellsort.h"
 #include "fileloader.h"
 
-void testFileLoader(const char * url)
-{
-	char * text;
-	char ** words = NULL;
-	int wordsSize = 0;
 
-	text = file_loader(url);
-	
-	if (text != NULL)
-	{
-		//fputs(text, stdout);
-	}
 
-	wordsSize = to_words(text, &words);
 
-	for(int i = 0; i < wordsSize; i++)
-	{
-		fputs("\n", stdout);
-		fputs(words[i], stdout);
-		fputs("\n", stdout);
-	}	
-}
+
+/* ****************************************************************************
+ * CONSTANTES
+ * ***************************************************************************/
+
+
+// Máximo de caracteres permitidos por texto de entrada estandar
+#define MAX_CHARS 1000
+
 
 
 
@@ -94,6 +113,8 @@ void versionImprimirSalidaEstandar()
 
 // Funcion que imprime los resultados del ordenamiento a traves de la salida
 // estandar.
+// PRE: 'palabras' es un arreglo de palabras; 'arraysize' es el tamanio del
+// arreglo
 void ordenamientoImprimirSalidaEstandar(char* palabras[], int arraysize)
 {
 	int i;
@@ -101,6 +122,79 @@ void ordenamientoImprimirSalidaEstandar(char* palabras[], int arraysize)
 	printf("\n");
 }
 
+
+// Funcion que se encarga leer archivos de texto devolviendo una cadena con
+// el contenido de estos.
+// PRE: 'iniArchivos' es el indice inicial desde donde 'argv' posee nombres
+// de archivo; 'argc' y 'argv' son los parametros de entrada de la funcion
+// main.
+// POST: se devuelve una unica cadena con el contenido completo de archivos.
+char* cargarTextosDeArchivos(int iniArchivos, int argc, char **argv) 
+{
+	int i;
+	char * texto = "";
+
+	// Sensamos cada archivo ingresado y concatenamos su contenido
+	for(i = iniArchivos; i < argc; i++)
+	{
+		// Cargamos contenido de archivo
+		char * texto_tmp = file_loader(argv[i]);
+		
+		// Recalculamos el tamaño del arreglo
+		int len = strlen(texto) + strlen(texto_tmp) + 2;
+		
+		// Solicitamos espacio de memoria nuevo
+		char * texto_alloc = (char *) malloc(len * sizeof(char));
+		
+		// Copiamos contenido antigui y concatenamos el nuevo
+		strcpy(texto_alloc, texto);
+		if(i > iniArchivos) strcat(texto_alloc, " ");
+		strcat(texto_alloc, texto_tmp);
+		
+		// Liberamos espacio de memoria antiguio
+		if(i > iniArchivos) free(texto);
+		
+		// Asociamos al nuevo arreglo
+		texto = texto_alloc;
+	}
+
+	return texto;
+}
+
+
+// Funcion que se encarga de leer el texto ingresado por entrada estandar.
+// POST: se devuelve una unica cadena con el texto ingresado.
+char* cargarTextosDeEntradaEstandar()
+{
+	char * texto = (char *) malloc(MAX_CHARS * sizeof(char) + 1);
+	if(fgets(texto, MAX_CHARS + 1, stdin) == NULL) return "";
+
+	return texto;
+}
+
+
+void testFileLoader(const char * url)
+{
+	char * text;
+	char ** words = NULL;
+	int wordsSize = 0;
+
+	text = file_loader(url);
+	
+	if (text != NULL)
+	{
+		//fputs(text, stdout);
+	}
+
+	wordsSize = to_words(text, &words);
+
+	for(int i = 0; i < wordsSize; i++)
+	{
+		fputs("\n", stdout);
+		fputs(words[i], stdout);
+		fputs("\n", stdout);
+	}	
+}
 
 
 
@@ -112,10 +206,6 @@ void ordenamientoImprimirSalidaEstandar(char* palabras[], int arraysize)
 
 int main(int argc, char **argv) 
 {
-	//testFileLoader("/home/facundo/c/prueba");
-
-	
-	char *cvalue = NULL;
 	int c;
 
 	//File loader variables
@@ -141,73 +231,88 @@ int main(int argc, char **argv)
 
 			// Ejecucion de bubblesort
 			case 'b':
-				cvalue = optarg;
-				printf("TEMP: %s\n", cvalue);
 
-				text = file_loader(cvalue);
+				// Cargamos contenidos de archivos
+				text = cargarTextosDeArchivos(2, argc, argv);
 
-				if (text == NULL)
-					break;
+				// Si el/los archivos esta/n vacio/s, salimos
+				if (text == NULL) break;
 	
 				wordsSize = to_words(text, &words);
 
-				if (wordsSize == -1)
-					break;
+				if (wordsSize == -1) break;
 				
+				// Ejecutamos bubblesort
 				bubblesort(words, wordsSize);
+
+				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
+				
 				break;
 
 			// Ejecucion de shellsort
 			case 's':
-				cvalue = optarg;
-				printf("TEMP: %s\n", cvalue);
 
-				text = file_loader(cvalue);
-				
-				if (text == NULL)
-					break;
+				// Cargamos contenidos de archivos
+				text = cargarTextosDeArchivos(2, argc, argv);
+
+				// Si el/los archivos esta/n vacio/s, salimos
+				if (text == NULL) break;
 
 				wordsSize = to_words(text, &words);
 
-				if (wordsSize == -1)
-					break;
+				if (wordsSize == -1) break;
 
+				// Ejecutamos shellsort
 				shellsort(words, wordsSize);
+
+				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
+
 				break;
 			
 			// No se especifica nombre de archivo
 			case '?':
-				// Ejecutar bubblesort con texto desde entrada 
-				// estandar
+
+				// Ejecutar bubblesort con texto desde entrada estandar
 				if(optopt == 'b')
 				{
-					// Ingresar texto por entrada estandar y parsearlo
-					// bubblesort(words, arraysize);
-					// ordenamientoImprimirSalidaEstandar(words, arraysize);
+					// Cargamos texto
+					text = cargarTextosDeEntradaEstandar();
 					
-					// DEBUG
-					char* s[7] = {"El", "tractorcito", "rojo", "que", "silbo", "y", "bufo"};
-					bubblesort(s, 7);
-					ordenamientoImprimirSalidaEstandar(s, 7);
-					// END-DEBUG
+					// Si no se ingreso texto, salimos
+					if (text == NULL) break;
+					wordsSize = to_words(text, &words);
+
+					if (wordsSize == -1) break;
+					
+					// Ejecutamos bubblesort
+					bubblesort(words, wordsSize);
+
+					// Enviamos a salida estandar
+					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
 					break;
 				}
+
 				// Ejecutar shellsort con texto desde entrada
 				// estandar
 				else if(optopt == 's')
 				{
-					// Ingresar texto por entrada estandar y parsearlo
-					// shellsort(words, arraysize);
-					// ordenamientoImprimirSalidaEstandar(words, size);
+					// Cargamos texto
+					text = cargarTextosDeEntradaEstandar();
+					
+					// Si no se ingreso texto, salimos
+					if (text == NULL) break;
+					wordsSize = to_words(text, &words);
 
-					// DEBUG
-					char* s[7] = {"El", "tractorcito", "rojo", "que", "silbo", "y", "bufo"};
-					shellsort(s, 7);
-					ordenamientoImprimirSalidaEstandar(s, 7);
-					// END-DEBUG
+					if (wordsSize == -1) break;
+					
+					// Ejecutamos shellsort
+					shellsort(words, wordsSize);
+
+					// Enviamos a salida estandar
+					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
 					break;
 				}
@@ -218,14 +323,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-
-/*
-	printf ("aflag = %d, bflag = %d, cvalue = %s\n", aflag, bflag, cvalue);
-     
-	for (index = optind; index < argc; index++)
-		printf ("Non-option argument %s\n", argv[index]);
-*/
-
+	// Manejo de casos en que no se ingresan argumentos validos
 	if(opterr || argc <= 1)
 	{
 		fprintf (stderr, "Los argumentos no son válidos.\n");

@@ -30,7 +30,6 @@ char * file_loader(const char * fileUrl)
 	 	//Fail to load file
 	 	fputs ("The file can not be open or not exist \n", stderr); 
 		return NULL;
-//	 	exit (1);
 	 }
 
 	 //Get file size
@@ -44,7 +43,6 @@ char * file_loader(const char * fileUrl)
 	 if (buffer == NULL) 
 	 {
 	 	fputs ("There is no enoght memory to allocate the file in memory \n", stderr); 
-//	 	exit (2);
 		return NULL;
 	}
 
@@ -55,7 +53,6 @@ char * file_loader(const char * fileUrl)
 	 if (result != fileSize) 
 	 {
 	 	fputs ("Fail to read the whole file \n", stderr); 
-//	 	exit (3);
 		return NULL;
 	 }
 
@@ -130,6 +127,8 @@ int to_words(char * text, char *** result)
 	return wordsIndex;
 }
 
+
+// [ Colocar documentacion ]
 bool isEndOfWord(char letter)
 {
 	//A-Z es de 65 a 90

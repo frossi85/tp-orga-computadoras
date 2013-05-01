@@ -8,8 +8,8 @@
 
 
 #include "bubblesort.h"
-#include "compare.h"
 #include <stdbool.h>
+#include <string.h>
 
 
 
@@ -36,7 +36,7 @@ void bubblesort(char* words[], int arraysize)
 		{
 			// Si el de indice menor es mayor que el de indice superior, los
 			// intercambiamos
-			if(compare(words[i-1], words[i]) > 0)
+			if(strcasecmp(words[i-1], words[i]) > 0)
 			{
 				sAux = words[i-1];
 				words[i-1] = words[i];
