@@ -1,3 +1,4 @@
+
 #ifndef USE_MIPS_ASSEMBLY
 #define USE_MIPS_ASSEMBLY
 #include <mips/regdef.h>
@@ -7,7 +8,6 @@
 .align 2
 .globl compare
 
-# t9 = i
 # t1 = posicion caracter actual en cadena 1
 # t2 = posicion caracter actual en cadena 2
 
