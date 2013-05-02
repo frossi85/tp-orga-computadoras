@@ -25,30 +25,33 @@ shellsort:	subu sp,sp,24		# creo stack frame, es de 24 porque necesito guardar r
 		lw s7, 28($fp)		#en 28 esta el size
 
 		#Iniciaizo variables locales
-		sra s0, s7, 1		# intervalo = size/2
+		srl s0, s7, 1		# intervalo = size/2
 		li s1, 0		# k
 		li s2, 0		# j
 		li s3, 0		# i
 		li s4, 0		# sAux
 
-		#Resto uno al valor de size para la comparacion del for i < size
-		addi s7, s7, -1
+
+		#add v0, s0, zero	
+		#j fin
 
 		#while(intervalo > 0)
-loop1:		bgt s0, zero, loop2	#branch grater than, salta si s1 es mayor a s0
+loop1:		bgt s0, zero, initloop2	#branch grater than, salta si s0 es mayor a 0
 		j fin
 
 		#for(i = intervalo-1; i < arraysize; i++)	
-loop2:		addi s3, s0, -1		# i = interlvalo - 1
-		bge s3, s7, endloop2	# mientras i <= size - 1, bge=branch greater than or equal
-		
-
+initloop2:	addi s3, s0, -1		# i = interlvalo - 1
+loop2:		bge s3, s7, endloop2	# si i >= size fin de for, bge=branch greater than or equal
 		sub s2, s3, s0		#j = i - intervalo;
+	
 
 		#while(j >= 0)
 loop3:		bge s2, zero, loop3task
 		addi s3, s3, 1
 		j loop2
+
+	
+
 
 loop3task:	add s1, s2, s0		#k = j + intervalo;
 
@@ -61,7 +64,9 @@ loop3task:	add s1, s2, s0		#k = j + intervalo;
 		#Guardo i y j por q las voy a modificar y no las quiero perder
 		sw s1, 0($fp)
 		sw s2, 4($fp)
-		
+
+
+
 		sll s1, s1, 2
 		sll s2, s2, 2
 		addu s1, s1, s6
@@ -72,21 +77,24 @@ loop3task:	add s1, s2, s0		#k = j + intervalo;
 		lw a1, 0(s2)			
 		jal compare		#llamo a compare
 
-		bltz v0, swapping
+		lw s1, 0($fp)		#Cargo el valor de k en stack
+		lw s2, 4($fp)		#Cargo el valor de j en stack
+
+		bltz v0, swapping	#swap si compare > 0
 		add s2, zero, zero	#j=0		
 		j endif
 
 		# poner el valor a utilizar en los registros correctos y llamar a swap
 swapping:	add a0, s6,0
-		add a1, s1,0
-		add a2, s2,0
+		add a1, s1, 0
+		add a2, s2, 0
 		jal swap
 
 endif:		sub s2, s2, s0		#j = j - intervalo;
 		j loop3
 
 
-endloop2:	sra s0, s0, 1		#intervalo = intervalo / 2;
+endloop2:	srl s0, s0, 1		#intervalo = intervalo / 2;
 		j loop1
 
 
