@@ -4,7 +4,7 @@
  * 
  * Facultad de Ingenieria - UBA
  * 66.20 Organizacion de computadoras
- * Trabajo Practico N°0: Conjunto de instrucciones MIPS
+ * Trabajo Practico: Conjunto de instrucciones MIPS
  * 
  * ALUMNOS: 
  * 
@@ -14,14 +14,14 @@
  *
  * ****************************************************************************
  *
- * Programa que permite aplicar métodos de ordenamiento a un texto o textos 
+ * Programa que permite aplicar metodos de ordenamiento a un texto o textos 
  * especificados por el usuario. Estos textos pueden ser ingresados a traves de
  * la entrada estandar o bien a traves de la especificacion de los nombres de
  * archivo que se desean procesar. Cabe resaltar que al especificar varios
  * nombres de archivos, los metodos seran aplicados al conjunto total de los
  * textos contenidos en estos. Es decir, el resultado del ordenamiento sera 
  * unico ya que contendra la mezcla de palabras de todos los archivos.
- * Los métodos de ordenamiento soportados por la presente versión del programa
+ * Los metodos de ordenamiento soportados por la presente version del programa
  * son: 
  *	
  *		- Bubblesort
@@ -73,7 +73,7 @@
  * ***************************************************************************/
 
 
-// Máximo de caracteres permitidos por texto de entrada estandar
+// Maximo de caracteres permitidos por texto de entrada estandar
 #define MAX_CHARS 1000
 
 #ifndef SHELLSORT_H
@@ -110,7 +110,7 @@ void ayudaImprimirSalidaEstandar()
 // Funcion que imprime por pantalla la version del programa.
 void versionImprimirSalidaEstandar()
 {
-	printf("Programa de ordenamiento de palabras\nVersión: v0.1\n");
+	printf("Programa de ordenamiento de palabras\nVersion: v0.1\n");
 }
 
 
@@ -143,7 +143,7 @@ char* cargarTextosDeArchivos(int iniArchivos, int argc, char **argv)
 		// Cargamos contenido de archivo
 		char * texto_tmp = file_loader(argv[i]);
 		
-		// Recalculamos el tamaño del arreglo
+		// Recalculamos el tamanio del arreglo
 		int len = strlen(texto) + strlen(texto_tmp) + 2;
 		
 		// Solicitamos espacio de memoria nuevo
@@ -329,7 +329,7 @@ int main(int argc, char **argv)
 	// Manejo de casos en que no se ingresan argumentos validos
 	if(opterr || argc <= 1)
 	{
-		fprintf (stderr, "Los argumentos no son válidos.\n");
+		fprintf (stderr, "Los argumentos no son validos.\n");
 		printf("Tipee 'tp0 -h' para ver el modo de uso.\n");
 	}
 

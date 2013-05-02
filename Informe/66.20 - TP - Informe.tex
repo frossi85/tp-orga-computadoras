@@ -25,6 +25,10 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage{graphicx}
+\usepackage{url}
+\usepackage[toc,page]{appendix}
+\usepackage{mips}
+
 
 %% Fin PAQUETES
 
@@ -93,6 +97,13 @@
 %% Referencia a las imagenes
 \newcommand{\refimage}[1]{\textit{Imagen \ref{#1}}}
 
+%% APENDICES
+\addto\captionsspanish{
+	\renewcommand\seename{Apéndices}
+	\renewcommand\appendixname{Apéndices}
+	\renewcommand\appendixpagename{Apéndices}
+}
+
 
 \begin{document}
 
@@ -101,12 +112,23 @@
 \begin{titlepage}
 	\vspace*{\fill}
 	\begin{center}
-		\large 66.20 Organización de Computadoras \\ \medskip
-		\huge Trabajo práctico N°1 \\ \medskip
 		\Huge \textit{``Conjunto de instrucciones MIPS''} \\
+		
+		\bigskip\bigskip\bigskip\bigskip\bigskip
 
-		\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
-		\Large\textit{Colangelo, Federico ()\\Rossi, Facundo ()\\Rossi, Federico Martín (92086)}
+		\Large Federico Colangelo, Padrón Nro. 89.869 \\
+		\large \textit{federico.colangelo@semperti.com} \\ \medskip
+		\Large Facundo Rossi, Padrón Nro. 86.707 \\
+		\large \textit{frossi85@gmail.com} \\ \medskip
+		\Large Federico Martín Rossi, Padrón Nro. 92.086 \\
+		\large \textit{federicomrossi@gmail.com} \\
+
+		\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip
+
+		\large 1er. Cuatrimestre 2013 \\ \smallskip
+		\large 66.20 Organización de Computadoras \\ \smallskip
+		\large Facultad de Ingeniería, Universidad de Buenos Aires \\ \smallskip
+
 		\date{}
 	\end{center}
 	\vspace*{\fill}
@@ -124,17 +146,173 @@
 
 % Introducción
 \section{Introducción}
-
 	
 	[ Colocar texto aquí ]
 \bigskip
 
 
-% % Código
-% \lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
-% \lstinputlisting[label=code00,caption=``archivo.c'']{codigo/dijkstra.c} 
+
+% Implementación
+\section{Implementaciones}
+	
+	[ Colocar texto aquí ]
+
+
+
+
+% Algoritmo Bubblesort (en lenguaje C)
+\subsection{Algoritmo \textit{Bubblesort} (en lenguaje C)}
+
+	[ Colocar texto aquí]
+
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeBSh,caption=``bubblesort.h'']{../Codigo/c/bubblesort.h} 
+\bigskip\bigskip
+
+
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeBSc,caption=``bubblesort.c'']{../Codigo/c/bubblesort.c} 
+\bigskip\bigskip
+
+
+
+
+% Algoritmo Shellsort (en lenguaje C)
+\subsection{Algoritmo \textit{Shellsort} (en lenguaje C)}
+
+	[ Colocar texto aquí]
+
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeSSh,caption=``shellsort.h'']{../Codigo/c/shellsort.h} 
+\bigskip\bigskip
+
+
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeSSc,caption=``shellsort.c'']{../Codigo/c/shellsort.c} 
+\bigskip\bigskip
+
+
+
+
+% Conclusiones
+\section{Conclusiones}
+
+
+\bigskip
+
+
+
+
+
+% Citas bibliográficas.
+\begin{thebibliography}{99}
+
+	\bibitem{HEN00} J. L. Hennessy and D. A. Patterson, ``Computer Architecture. A Quantitative
+	Approach,'' 4th Edition, Morgan Kaufmann Publishers, 2000.
+
+	\bibitem{GXEMUL} The NetBSD project, \url{http://www.netbsd.org/}
+
+	\bibitem{BS} Bubblesort, \url{http://en.wikipedia.org/wiki/Bubble_sort}
+
+	\bibitem{SS} Shellsort, \url{http://en.wikipedia.org/wiki/Shell_sort}
+
+	\bibitem{TIME} time man page, \url{http://unixhelp.ed.ac.uk/CGI/man-cgi?time}
+
+	\end{thebibliography}
+
+
+
+\newpage
+
+
+% Apendices
+\begin{appendices}
+
+\bigskip\bigskip
+
+% Implementación completa en lenguaje C
+\section{Implementación completa en lenguaje C}
+
+
+\subsection{\textit{tp0.c}. Implementación del main del programa}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeTP0cfull,caption=``tp0.c'']{../Codigo/c/tp0.c} 
+\bigskip\bigskip
+
+\subsection{\textit{bubblesort.h}. Declaración de la librería Bubblesort}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeBShfull,caption=``bubblesort.h'']{../Codigo/c/bubblesort.h} 
+\bigskip\bigskip
+
+\subsection{\textit{bubblesort.c}. Definición de la librería Bubblesort}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeBScfull,caption=``bubblesort.c'']{../Codigo/c/bubblesort.c} 
+\bigskip\bigskip
+
+\subsection{\textit{shellsort.h}. Declaración de la librería Shellsort}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeSShfull,caption=``shellsort.h'']{../Codigo/c/shellsort.h} 
+\bigskip\bigskip
+
+\subsection{\textit{shellsort.c}. Definición de la librería Shellsort}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeSScfull,caption=``shellsort.c'']{../Codigo/c/shellsort.c} 
+\bigskip\bigskip
+
+\subsection{\textit{fileloader.h}. Declaración de la librería File Loader}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeFLhfull,caption=``fileloader.h'']{../Codigo/c/fileloader.h} 
+\bigskip\bigskip
+
+\subsection{\textit{fileloader.c}. Definición de la librería File Loader}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeFLcfull,caption=``fileloader.c'']{../Codigo/c/fileloader.c} 
+\bigskip\bigskip
+
+
+
+
+% Implementación completa en assembler MIPS
+\section{Implementación completa de Shellsort en assembly MIPS}
+
+
+\subsection{\textit{main.c}. Implementación del main del programa}
+% Código
+\lstset{ language = C } % Cambiamos el lenguaje para que parsee en C
+\lstinputlisting[label=codeTP0afull,caption=``main.c'']{../Codigo/assembly/main.c} 
+\bigskip\bigskip
+
+\subsection{\textit{shellsort.S}. Implementación del algoritmo Shellsort}
+% Código
+% \lstset{ language = [mips]Assembler} % Cambiamos el lenguaje para que parsee en MIPS
+% \lstinputlisting[label=codeSSafull,caption=``shellsort.S'']{../Codigo/assembly/shellsort.S} 
+% \bigskip\bigskip
+
+\subsection{\textit{compare.S}. Implementación del comparador de palabras}
+% Código
+% \lstset{ language = [mips]Assembler} % Cambiamos el lenguaje para que parsee en MIPS
+% \lstinputlisting[label=codeCMPafull,caption=``compare.S'']{../Codigo/assembly/compare.S} 
+% \bigskip\bigskip
+
+\subsection{\textit{swap.S}. Implementación del comparador de palabras}
+% Código
+% \lstset{ language = [mips]Assembler} % Cambiamos el lenguaje para que parsee en MIPS
+% \lstinputlisting[label=codeSWAPafull,caption=``swap.S'']{../Codigo/assembly/swap.S} 
 % \bigskip\bigskip
 
 
+
+\end{appendices}
 
 \end{document}
