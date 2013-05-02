@@ -330,8 +330,30 @@ Finalmente se utilizó la herramienta \textit{Valgrind} para realizar un anális
 \indent \$ time ./tp0 -b alice.txt\\}
 
 
-\noindent Esto imprimirá por pantalla el tiempo de ejecución que fue tabulado para cada caso. 
-\bigskip
+\noindent Esto imprimirá por pantalla el tiempo de ejecución que fue tabulado para cada caso. En el \textit{Cuadro 1} se muestran los valores de tiempo obtenidos.
+\bigskip\bigskip
+
+
+% Tabla 1
+\begin{table}[!hbt]
+	\begin{center}
+	\begin{tabular}{|>{\centering\arraybackslash}m{3cm}|>{\centering \arraybackslash}m{3cm}|>{\centering \arraybackslash}m{3cm}|>{\centering \arraybackslash}m{3cm}|}
+		\hline
+		\rowcolor[gray]{0.9}\textbf{Archivo de texto} & \textbf{bubblesort.c [s] } & \textbf{shellsort.c [s] }  & \textbf{shellsort.S [s] }\\
+		\hline
+		\centering alice.txt & 571,715 & 2,207 & 1,035  \\
+		\hline
+		\centering beowulf.txt & 958,527 & 3,418 & 1,500  \\
+		\hline
+		\centering cyclopedia.txt & >3600 & 12,184 & 6,914   \\
+		\hline
+		\centering elquijote.txt & >3600 & 48,957 & 33,098  \\
+		\hline
+	\end{tabular}
+	\caption{Tiempos en segundos obtenidos en la ejecución de los distintos algoritmos.}
+	\end{center}
+\end{table}
+\bigskip\bigskip
 
 
 
@@ -339,9 +361,12 @@ Finalmente se utilizó la herramienta \textit{Valgrind} para realizar un anális
 % Conclusiones
 \section{Conclusiones}
 
-
-\bigskip
-
+	Al realizar la comparación entre los algoritmos bubblesort y shellsort en C, vemos que la diferencia entre ambos es notable. Estamos hablando de varios ordenes de maginitud.
+	\par
+	Esto se debe a que por su codigo bubblesort tiene un coste de O($n^2$) mientras que si bien no podemos determinarlo fácilmente para shellsort, ya que depende mucho del gap elegido, estamos hablando de algo cercano a O($n log(n)$). Esto hace que para textos grandes no sea una opción viable la utilización de bubblesort, mientras que shellsort prueba ser muy eficiente y el esfuerzo de codificación no es demsiado grande.
+	\par
+	En cuanto a la comparación de assembler y C, notamos una ligera ventaja del primero. Creemos que esto se debe a que muchas de las cosas que el algoritmo en C utiliza como variables en memoria principal, assembler utiliza registros los cuales presentan un tiempo de lecto/escritura notablemente menor.
+\bigskip\bigskip
 
 
 
@@ -359,12 +384,12 @@ Finalmente se utilizó la herramienta \textit{Valgrind} para realizar un anális
 
 	\bibitem{TIME} time man page, \url{http://unixhelp.ed.ac.uk/CGI/man-cgi?time}
 
+	\bibitem{ABI} MIPS ABI, \url{http://www.sco.com/developers/devspecs/mipsabi.pdf}
+
 	\bibitem{HEN00} J. L. Hennessy and D. A. Patterson, ``Computer Architecture. A Quantitative
 	Approach,'' 4th Edition, Morgan Kaufmann Publishers, 2000.
 
 	\end{thebibliography}
-
-
 
 \newpage
 
