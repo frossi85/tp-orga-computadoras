@@ -252,8 +252,8 @@ int main(int argc, char **argv)
 				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 				
+				free(words);
 				free(text);
-
 				break;
 
 			// Ejecucion de shellsort
@@ -275,6 +275,7 @@ int main(int argc, char **argv)
 				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+				free(words);
 				free(text);
 				break;
 			
@@ -299,6 +300,7 @@ int main(int argc, char **argv)
 					// Enviamos a salida estandar
 					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+					free(words);
 					free(text);
 					break;
 				}
@@ -322,6 +324,7 @@ int main(int argc, char **argv)
 					// Enviamos a salida estandar
 					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+					free(words);
 					free(text);
 					break;
 				}

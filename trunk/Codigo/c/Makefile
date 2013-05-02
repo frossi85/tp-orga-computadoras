@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS=-std=gnu99
+FLAGS=-std=gnu99 -O0
 CLEAN=rm
 
 
@@ -21,4 +21,10 @@ fileloader.o: fileloader.h fileloader.c
 	$(CC) $(FLAGS) -c fileloader.c -o fileloader.o
 
 clean:
-	rm *.o
+	rm *.o tp0
+
+valgrind1: 
+	valgrind $(VGFLAGS) ./tp0 -s alice.txt
+
+valgrind2: 
+	valgrind $(VGFLAGS) ./tp0 -b alice.txt
