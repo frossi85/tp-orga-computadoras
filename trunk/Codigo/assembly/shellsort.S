@@ -76,13 +76,11 @@ loop3task:	add s1, s2, s0		#k = j + intervalo;
 		add s2, zero, zero	#j=0		
 		j endif
 
-swapping:	# poner el valor a utilizar en los registros correctos y llamar a swap
-
-		#Falta esto
-		#	sAux = words[j];
-		#	words[j] = words[k];
-		#	words[k] = sAux;
-
+		# poner el valor a utilizar en los registros correctos y llamar a swap
+swapping:	add a0, s6,0
+		add a1, s1,0
+		add a2, s2,0
+		jal swap
 
 endif:		sub s2, s2, s0		#j = j - intervalo;
 		j loop3
