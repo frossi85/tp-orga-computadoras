@@ -153,6 +153,7 @@ char* cargarTextosDeArchivos(int iniArchivos, int argc, char **argv)
 		strcpy(texto_alloc, texto);
 		if(i > iniArchivos) strcat(texto_alloc, " ");
 		strcat(texto_alloc, texto_tmp);
+		free(texto_tmp);
 		
 		// Liberamos espacio de memoria antiguio
 		if(i > iniArchivos) free(texto);
@@ -251,6 +252,8 @@ int main(int argc, char **argv)
 				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 				
+				free(text);
+
 				break;
 
 			// Ejecucion de shellsort
@@ -272,6 +275,7 @@ int main(int argc, char **argv)
 				// Enviamos a salida estandar
 				ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+				free(text);
 				break;
 			
 			// No se especifica nombre de archivo
@@ -295,6 +299,7 @@ int main(int argc, char **argv)
 					// Enviamos a salida estandar
 					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+					free(text);
 					break;
 				}
 
@@ -317,6 +322,7 @@ int main(int argc, char **argv)
 					// Enviamos a salida estandar
 					ordenamientoImprimirSalidaEstandar(words, wordsSize);
 
+					free(text);
 					break;
 				}
 
