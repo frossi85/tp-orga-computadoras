@@ -2,23 +2,28 @@ CC=gcc
 FLAGS=-std=gnu99
 CLEAN=rm
 
-all: main
+all: tp0
 
-main: compare.o shellsort.o swap.o suma.o
-	$(CC) $(FLAGS) compare.o shellsort.o swap.o suma.o main.c -o main
+tp0: bubblesort.o shellsortasm.o fileloader.o tp0.c
+	$(CC) $(FLAGS) bubblesort.o shellsort.o fileloader.o compare.o swap.o tp0.c -o tp0
+
+bubblesort.o: bubblesort.h bubblesort.c
+	$(CC) $(FLAGS) -c bubblesort.c -o bubblesort.o
+
+shellsortc.o: shellsort.h shellsort.c
+	$(CC) $(FLAGS) -c shellsort.c -o shellsort.o
+
+fileloader.o: fileloader.h fileloader.c
+	$(CC) $(FLAGS) -c fileloader.c -o fileloader.o
 
 compare.o: compare.S
-	gcc -c compare.S -o compare.o
-
-suma.o: suma.S
-	gcc -c suma.S -o suma.o
+	$(CC) -c compare.S -o compare.o
 
 swap.o: swap.S
-	gcc -c swap.S -o swap.o
+	$(CC) -c swap.S -o swap.o
 
-shellsort.o: shellsort.S
-	gcc -c shellsort.S -o shellsort.o
+shellsortasm.o: compare.o swap.o shellsort.S
+	$(CC) -c shellsort.S -o shellsort.o
 
-clean: 
-	$(CLEAN) *.o
-
+clean:
+	rm *.o
