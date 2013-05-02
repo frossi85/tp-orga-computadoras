@@ -4,11 +4,8 @@ CLEAN=rm
 
 all: tp0
 
-tp0: bubblesort.o shellsortasm.o fileloader.o tp0.c
-	$(CC) $(FLAGS) bubblesort.o shellsort.o fileloader.o compare.o swap.o tp0.c -o tp0
-
-bubblesort.o: bubblesort.h bubblesort.c
-	$(CC) $(FLAGS) -c bubblesort.c -o bubblesort.o
+tp0: shellsortasm.o fileloader.o tp0.c
+	$(CC) $(FLAGS) shellsort.o fileloader.o compare.o swap.o tp0.c -o tp0
 
 shellsortc.o: shellsort.h shellsort.c
 	$(CC) $(FLAGS) -c shellsort.c -o shellsort.o
