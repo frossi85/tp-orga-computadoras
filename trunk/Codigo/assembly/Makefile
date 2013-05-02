@@ -25,5 +25,11 @@ swap.o: swap.S
 shellsortasm.o: compare.o swap.o shellsort.S
 	$(CC) -c shellsort.S -o shellsort.o
 
+valgrind1: 
+	valgrind $(VGFLAGS) ./tp0 -s alice.txt
+
+valgrind2: 
+	valgrind $(VGFLAGS) ./tp0 -b alice.txt
+
 clean:
 	rm *.o
