@@ -76,11 +76,7 @@
 // Maximo de caracteres permitidos por texto de entrada estandar
 #define MAX_CHARS 1000
 
-#ifndef SHELLSORT_H
-extern char * swap(char **, int, int);
-extern int compare(char *, char *);
-extern int shellsort(char **, size_t);
-#endif
+
 
 /* ****************************************************************************
  * FUNCIONES AUXILIARES

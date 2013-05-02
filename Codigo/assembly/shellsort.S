@@ -55,8 +55,8 @@ loop3:		bge s2, zero, loop3task
 
 loop3task:	add s1, s2, s0		#k = j + intervalo;
 
-		#Para comparar cadenas, la forma más sencilla es iterar sobre cada caracter de cada cadena, y restarlos. Si el resultado es 0, son 
-#iguales. Si no, a continuación, si el resultado es> 0, entonces la primera cadena es mayor de que la otra cadena, de lo contrario la segunda cadena es inferior y #habria que intercambiarlas. Si te quedas sin alguna de las cadenas antes que el otro, y son iguales hasta llegar a ese punto, la cadena más corta es menor que el que #más.
+		#Para comparar cadenas, la forma mas sencilla es iterar sobre cada caracter de cada cadena, y restarlos. Si el resultado es 0, son 
+#iguales. Si no, a continuacion, si el resultado es> 0, entonces la primera cadena es mayor de que la otra cadena, de lo contrario la segunda cadena es inferior y #habria que intercambiarlas. Si te quedas sin alguna de las cadenas antes que el otro, y son iguales hasta llegar a ese punto, la cadena mas corta es menor que el que #mas.
 		#CARGO LAS CADENAS A COMPARAR
 		#words[j]
 		##Guardo en variables auxiliares las direcciones de memoria a intercambiar
