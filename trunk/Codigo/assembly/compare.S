@@ -39,7 +39,7 @@ aMinusculas2:	addi t5, t4, -91
 		bgtz t5, comparacion
 		addi t5, t4, -64
 		bltz t5, comparacion
-		addi t3, t4, 32
+		addi t4, t4, 32
 
 
 		#Comparo caracter para ver si es final del string
