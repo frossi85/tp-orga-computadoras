@@ -81,7 +81,7 @@ int to_words(char * text, char *** result)
 	size_t spaceForWords = INITIAL_BUFFER_SIZE;
 
 	//initialy allocate memory for 100 words
-	words = malloc ( INITIAL_BUFFER_SIZE * sizeof(char*) );
+	words = (char **) malloc ( INITIAL_BUFFER_SIZE * sizeof(char*) );
 
 	if(words == NULL)
 	{
@@ -98,7 +98,7 @@ int to_words(char * text, char *** result)
 				words[wordsIndex] = &text[i];
 				isNewWord = false;
 
-				if(wordsIndex >= spaceForWords)
+				if(wordsIndex >= spaceForWords-1)
 				{
 					//Reallocate for more space and copy the old array to the new one
 					bufferSize *= 2;
