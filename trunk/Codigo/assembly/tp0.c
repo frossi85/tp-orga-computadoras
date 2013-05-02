@@ -24,7 +24,6 @@
  * Los metodos de ordenamiento soportados por la presente version del programa
  * son: 
  *	
- *		- Bubblesort
  *		- Shellsort
  *
  *
@@ -40,7 +39,6 @@
  *
  *	-h,		Muestra la ayuda
  *	-V,		Muestra la informacion de la version
- *	-b,		Indica la utilizacion del algoritmo Bubblesort
  *	-s,		Indica la utilizacion del algoritmo Shellsort
  *
  * y en archivos se debe especificar los nombres de archivo (incluyendo su
@@ -60,8 +58,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "bubblesort.h"
-#include "shellsort.h"
 #include "fileloader.h"
 
 
@@ -76,11 +72,14 @@
 // Maximo de caracteres permitidos por texto de entrada estandar
 #define MAX_CHARS 1000
 
+
 #ifndef SHELLSORT_H
 extern char * swap(char **, int, int);
 extern int compare(char *, char *);
 extern int shellsort(char **, size_t);
 #endif
+
+
 
 /* ****************************************************************************
  * FUNCIONES AUXILIARES
@@ -93,7 +92,6 @@ void ayudaImprimirSalidaEstandar()
 	printf("tp0 [OPTIONS] [files...]\n");
 	printf("-h, \t\t\t display this help and exit.\n");
 	printf("-V, \t\t\t display version information and exit.\n");
-	printf("-b, \t\t\t use the bubblesort algorithm.\n");
 	printf("-s, \t\t\t use the shellsort algorithm.\n\n");
 	printf("$echo -n echo 'El tractorcito rojo que silbo y bufo' > entrada.txt\n");
 	printf("$tp0 -b entrada.txt\n");
@@ -219,7 +217,7 @@ int main(int argc, char **argv)
 
 	opterr = 0;
 
-	while ((c = getopt(argc, argv, "hVb:s:")) != -1)
+	while ((c = getopt(argc, argv, "hV:s:")) != -1)
 	{
 		switch (c)
 		{
@@ -231,29 +229,6 @@ int main(int argc, char **argv)
 			// Version
 			case 'V':
 				versionImprimirSalidaEstandar();
-				break;
-
-			// Ejecucion de bubblesort
-			case 'b':
-
-				// Cargamos contenidos de archivos
-				text = cargarTextosDeArchivos(2, argc, argv);
-
-				// Si el/los archivos esta/n vacio/s, salimos
-				if (text == NULL) break;
-	
-				wordsSize = to_words(text, &words);
-
-				if (wordsSize == -1) break;
-				
-				// Ejecutamos bubblesort
-				bubblesort(words, wordsSize);
-
-				// Enviamos a salida estandar
-				ordenamientoImprimirSalidaEstandar(words, wordsSize);
-				
-				free(words);
-				free(text);
 				break;
 
 			// Ejecucion de shellsort
@@ -282,32 +257,9 @@ int main(int argc, char **argv)
 			// No se especifica nombre de archivo
 			case '?':
 
-				// Ejecutar bubblesort con texto desde entrada estandar
-				if(optopt == 'b')
-				{
-					// Cargamos texto
-					text = cargarTextosDeEntradaEstandar();
-					
-					// Si no se ingreso texto, salimos
-					if (text == NULL) break;
-					wordsSize = to_words(text, &words);
-
-					if (wordsSize == -1) break;
-					
-					// Ejecutamos bubblesort
-					bubblesort(words, wordsSize);
-
-					// Enviamos a salida estandar
-					ordenamientoImprimirSalidaEstandar(words, wordsSize);
-
-					free(words);
-					free(text);
-					break;
-				}
-
 				// Ejecutar shellsort con texto desde entrada
 				// estandar
-				else if(optopt == 's')
+				if(optopt == 's')
 				{
 					// Cargamos texto
 					text = cargarTextosDeEntradaEstandar();
