@@ -13,10 +13,18 @@
 
 
 compare:
-		subu sp,sp,16		# creo stack frame
+		subu sp,sp,48		# creo stack frame
 		sw $fp,12(sp)
 		sw gp,8(sp)
 		move $fp,sp
+		sw s0,16(sp)
+		sw s1,20(sp)
+		sw s2,24(sp)
+		sw s3,28(sp)
+		sw s4,32(sp)
+		sw s5,36(sp)
+		sw s6,40(sp)
+		sw s7,44(sp)
 
 		add t0, zero, zero	# result =0
 		add t1, zero, a0
@@ -64,10 +72,18 @@ fincadena2:	add t0, zero, 1
 fin:		##Comienzo retorno
 		addi v0, t0, 0
 
+		lw s7, 44(sp)
+		lw s6, 40(sp)
+		lw s5, 36(sp)
+		lw s4, 32(sp)
+		lw s3, 28(sp)
+		lw s2, 24(sp)
+		lw s1, 20(sp)
+		lw s0, 16(sp)
 		move sp, $fp
 		lw gp, 8(sp)
 		lw $fp, 12(sp)
-		addiu sp, sp, 16
+		addiu sp, sp, 48
 		jr ra			#ra = return address es la direccion a la q quiero volver luego de llamar la funcion
 
 #endif
