@@ -28,7 +28,7 @@
  *
  */
 
-include <stdio.h>
+#include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,15 +45,16 @@ int main (int argc, char** argv)
 	size_t size;
 	int i;	
 
-	texto=file_loader((charargv[1]);
+	texto=file_loader(argv[1]);
 	size=to_words(texto,&words);
 
 	shellsort(words, size);
-	for(i=0;i<size;i++)
-	{
-		puts(words[i]);
-	}
+	i=0;
+        while (i<size)
+        {
+                puts(words[i]);
+                i++;
+        }
 
 	return 0;
 }
-	
